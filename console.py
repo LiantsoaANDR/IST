@@ -2,11 +2,12 @@ import cmd
 from models.base_model import BaseModel
 from models.appareil import Appareil
 from models.salle import Salle
+from models.user import User
 from models import storage
 
 class Shell(cmd.Cmd):
 
-    class_list = ["BaseModel", "Appareil", "Salle"]
+    class_list = ["BaseModel", "Appareil", "Salle", "User"]
 
     prompt = '(estimateur) '
 
