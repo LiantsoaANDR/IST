@@ -24,24 +24,16 @@ class Shell(cmd.Cmd):
         """
         Crée un objet de son choix
         """
+        """Creates a new instance of BaseModel, saves it (to the JSON file)"""
         arg_list = arg.split()
         if arg == "":
-            print("** Veuillez entrer la classe de l'objet suivie de son nom puis de sa consommation **")
-        elif arg_list[0] not in self.class_list:
-            print("** Cette classe n'existe pas. Les classes sont: BaseModel, Appareil, Salle **")
-        elif len(arg_list) == 1:
-            print("** Entrer un nom du model **")
-        elif len(arg_list) == 2:
-            arg_list.append(0)
-            obj = eval(arg_list[0])(arg_list[1], int(arg_list[2]))
-            print(obj)
-            obj.save()
-        elif len(arg_list) > 3:
-            print("** Trop d'argument. Les arguments doivent etre: Class Nom Consommation **")
+            print("** class name missing **")
+        elif arg not in self.class_list:
+            print("** class doesn't exist **")
         else:
-            obj = eval(arg_list[0])(arg_list[1], int(arg_list[2]))
-            print(obj)
+            obj = eval(arg)()
             obj.save()
+            print(obj)
 
     def do_show(self, arg):
         """
@@ -78,6 +70,7 @@ class Shell(cmd.Cmd):
             if obj_key in storage.all():
                 storage.all().pop(obj_key)
                 storage.save()
+                print("Detruit")
                 return
             print("** L'objet n'existe pas **")
 
@@ -85,16 +78,13 @@ class Shell(cmd.Cmd):
         """
         Prints toues les representations de tous les objects selon ou non leur nom de classe
         """
-        obj_rep = []
         if arg == "":
             for obj in storage.all().values():
-                obj_rep.append(str(obj))
-            print(obj_rep)
+                print(str(obj))
         elif arg in self.class_list:
             for obj in storage.all().values():
                 if obj.__class__.__name__ == arg:
-                    obj_rep.append(str(obj))
-            print(obj_rep)
+                    print(str(obj))
         else:
             print("** L'objet n'existe pas **")
 
@@ -103,7 +93,7 @@ class Shell(cmd.Cmd):
         Met à jour l'objet selon son nom de classeet et de son identifiant en ajoutant ou mettant à jour son attribute
         (Enregistre les changements effectués)
         """
-        arg_list = arg.split()
+        arg_list = arg.split(' ')
         if arg == "":
             print("** Manque du nom de la classe **")
         elif arg_list[0] not in self.class_list:
@@ -123,6 +113,7 @@ class Shell(cmd.Cmd):
                         arg_list[3][1:-1]
                         )
                 storage.save()
+                print("Mise a jour")
             else:
                 print("** L'objet n'existe pas **")
 

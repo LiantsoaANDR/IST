@@ -6,35 +6,29 @@ import uuid
 
 
 class BaseModel:
-    """
-    Le modele de base de nos objets et salles consommateurs d'eau
+    """ommateurs d'eau
     """
     count = 0
+    id = None
 
-    def __init__(self, name=None, cons=0):
+    def __init__(self, *arg, **kwargs):
         """
         self : l'objet en question
-        name : le nom de l'objet créé
-        cons : la consommation en eau, en entier
-        """
-        if name is None:
-            raise ValueError("** Veuillez inserer un nom svp **")
-
-        if cons < 0:
-            raise ValueError("** La consommation doit etre >= 0 **")
-        
-        self.name = name
-        self.cons = cons
-        BaseModel.count += 1
-        # l'id est nécessaire car il est possible que plusieurs objets possèdent le même nom. d'où la nécessité d'un identifiant(id) unique
-        self.id = str(uuid.uuid4())
-        models.storage.new(self)
+        arg : non utilisé
+        kwarg : dictionnaire de valeur de nos attributs (comme nom et consommation)
+        """        
+        if kwargs and len(kwargs) > 0:
+            for key, value in kwargs.items():
+                    self.__dict__[key] = value
+        else:
+            self.id = str(uuid.uuid4())
+            models.storage.new(self)
     
     def __str__(self):
         """
         Retourne la representation de comment BaseModel devrait etre print-er
         """
-        return ("L'objet {} de numero {} a pour consommation {}".format(self.name, self.id, self.cons))
+        return ("L'objet de type '{}' de nom '{}' d'identifiant: {} a pour consommation {}".format(self.__class__.__name__, self.name, self.id, self.cons))
 
     def save(self):
         """
