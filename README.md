@@ -1,7 +1,7 @@
 # Logiciel de calcul
 Projet estimateur de consommation en eau en fonction des utilisateurs
 
-## Les commandes du console:
+## Les commandes de notre console:
 * print <x>: print x
 * quit: Quitte la console
 * create <x>: Crée un objet de type x
