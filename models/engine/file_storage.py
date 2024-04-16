@@ -1,4 +1,4 @@
-"""Module servant comme une sorte de base de donnees. Sauvegarde en fichier json"""
+"""Module servant à sauvegarder nos données. Sauvegarde en fichier json"""
 import json
 from models.base_model import BaseModel
 from models.appareil import Appareil
