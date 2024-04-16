@@ -2,12 +2,11 @@ import cmd
 from models.base_model import BaseModel
 from models.appareil import Appareil
 from models.salle import Salle
-from models.user import User
 from models import storage
 
 class Shell(cmd.Cmd):
 
-    class_list = ["BaseModel", "Appareil", "Salle", "User"]
+    class_list = ["BaseModel", "Appareil", "Salle"]
 
     prompt = '(estimateur) '
 
@@ -117,6 +116,48 @@ class Shell(cmd.Cmd):
                 print("Mise a jour")
             else:
                 print("** L'objet n'existe pas **")
+
+    def do_estimate(self, arg):
+        """
+        Fait une estimation de la consommation moyenne des utilisateurs
+        """
+        estim = 0
+        if arg == "":
+            for obj in storage.all().values():
+                estim += int(obj.cons) * int(obj.user)
+            print("La consommation totale de tout le systeme est : {} L".format(estim))
+        elif arg in self.class_list:
+            for obj in storage.all().values():
+                if obj.__class__.__name__ == arg:
+                    estim += int(obj.cons) * int(obj.user)
+            print("La consommation totale de tous les '{}' est : {} L".format(arg, estim))
+        else:
+            print("** L'objet n'existe pas **")
+
+    def do_precise(self, arg):
+        """
+        Fait un calcul de la consommation des appareils et/ou salles précisés
+        """
+        arg_list = arg.split()
+        if not arg_list:
+            print("** Manque de l'identifiant **")
+            return
+
+        total_conso = 0
+        for obj_id in arg_list:
+            found_obj = None
+            for obj in storage.all().values():
+                if obj.id == obj_id:
+                    found_obj = obj
+                    break
+
+            if found_obj is None:
+                print("Objet avec l'ID '{}' n'a pas été trouvé.".format(obj_id))
+                return
+            else:
+                conso = int(found_obj.cons) * int(found_obj.user)
+                total_conso += conso
+        print("La consommation totale des objets précisés est : {} L".format(total_conso))
 
 
 if __name__ == '__main__':

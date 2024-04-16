@@ -7,10 +7,9 @@ class Appareil(BaseModel):
     """
     L'objet appareil
     """
-    count = 0
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Appareil.count += 1
 
     nom = "SANS NOM"
+    user = 0
     cons = 0

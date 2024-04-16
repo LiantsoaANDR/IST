@@ -7,10 +7,9 @@ class Salle(BaseModel):
     """
     L'objet Salle
     """
-    count = 0
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Salle.count += 1
 
     nom = "SANS NOM"
+    user = 0
     cons = 0

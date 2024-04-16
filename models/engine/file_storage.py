@@ -3,7 +3,6 @@ import json
 from models.base_model import BaseModel
 from models.appareil import Appareil
 from models.salle import Salle
-from models.user import User
 
 
 class FileStorage:
@@ -37,7 +36,7 @@ class FileStorage:
         """
         Transforme le fichier JSON en __objects (Seulement si ce fichier existe)
         """
-        classes = {'BaseModel': BaseModel, 'Appareil': Appareil, 'Salle': Salle, 'User': User}
+        classes = {'BaseModel': BaseModel, 'Appareil': Appareil, 'Salle': Salle}
         try:
             with open(FileStorage.__file_path, "r") as f:
                 object_dict = json.load(f)

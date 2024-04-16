@@ -8,7 +8,6 @@ import uuid
 class BaseModel:
     """ommateurs d'eau
     """
-    count = 0
     id = None
 
     def __init__(self, *arg, **kwargs):
@@ -28,9 +27,7 @@ class BaseModel:
         """
         Retourne la representation de comment BaseModel devrait etre print-er
         """
-        if self.__class__.__name__ == 'User':
-             return("L'objet de type '{}' d'identifiant: {} a pour age: {}".format(self.__class__.__name__, self.id, self.age))
-        return ("L'objet de type '{}' de nom '{}' d'identifiant: {} a pour consommation {}".format(self.__class__.__name__, self.nom, self.id, self.cons))
+        return ("L'objet de type '{}' de nom '{}' d'identifiant: {} est utilise par {} personne(s). Consommation: {} L/personne ".format(self.__class__.__name__, self.nom, self.id, self.user, self.cons))
 
     def save(self):
         """
