@@ -4,12 +4,19 @@ from models.appareil import Appareil
 from models.salle import Salle
 from models import storage
 
+def is_float(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
 class Shell(cmd.Cmd):
 
     class_list = ["BaseModel", "Appareil", "Salle"]
 
     prompt = '(estimateur) '
-
+    
     def do_print(self, arg):
         print(arg)
 
@@ -107,13 +114,17 @@ class Shell(cmd.Cmd):
         else:
             obj_key = arg_list[0] + "." + arg_list[1]
             if obj_key in storage.all():
-                setattr(
-                        storage.all()[obj_key],
-                        arg_list[2],
-                        arg_list[3][1:-1]
-                        )
+                obj = storage.all()[obj_key]
+                attribute_name = arg_list[2]
+                new_value = arg_list[3][1:-1]
+                if attribute_name in ['cons', 'user']:
+                    if not new_value.isdigit() and not is_float(new_value):
+                        print("La valeur de l'attribut '{}' doit être un entier ou un nombre décimal.".format(attribute_name))
+                        return
+                    
+                setattr(obj, attribute_name, new_value)
                 storage.save()
-                print("Mise a jour")
+                print("Mise à jour de l'attribut '{}' de l'objet {} avec la valeur {}.".format(attribute_name, obj_key, new_value))
             else:
                 print("** L'objet n'existe pas **")
 
@@ -121,16 +132,16 @@ class Shell(cmd.Cmd):
         """
         Fait une estimation de la consommation moyenne des utilisateurs
         """
-        estim = 0
+        estim = 0.0
         if arg == "":
             for obj in storage.all().values():
-                estim += int(obj.cons) * int(obj.user)
-            print("La consommation totale de tout le systeme est : {} L".format(estim))
+                estim += float(obj.cons) * float(obj.user)
+            print("La consommation totale de tout le systeme est : {:.2f} L".format(estim))
         elif arg in self.class_list:
             for obj in storage.all().values():
                 if obj.__class__.__name__ == arg:
-                    estim += int(obj.cons) * int(obj.user)
-            print("La consommation totale de tous les '{}' est : {} L".format(arg, estim))
+                    estim += float(obj.cons) * float(obj.user)
+            print("La consommation totale de tous les '{}' est : {:.2f} L".format(arg, estim))
         else:
             print("** L'objet n'existe pas **")
 
@@ -143,7 +154,7 @@ class Shell(cmd.Cmd):
             print("** Manque de l'identifiant **")
             return
 
-        total_conso = 0
+        total_conso = 0.0
         for obj_id in arg_list:
             found_obj = None
             for obj in storage.all().values():
@@ -155,9 +166,9 @@ class Shell(cmd.Cmd):
                 print("Objet avec l'ID '{}' n'a pas été trouvé.".format(obj_id))
                 return
             else:
-                conso = int(found_obj.cons) * int(found_obj.user)
+                conso = float(found_obj.cons) * float(found_obj.user)
                 total_conso += conso
-        print("La consommation totale des objets précisés est : {} L".format(total_conso))
+        print("La consommation totale des objets précisés est : {:.2f} L".format(total_conso))
 
 
 if __name__ == '__main__':

@@ -6,7 +6,11 @@ import uuid
 
 
 class BaseModel:
-    """ommateurs d'eau
+    """
+    Class servant de base pour les objets consommateurs d'eau
+
+    Attribut(s):
+        id : identifiant unique de chaque objet existant
     """
     id = None
 
