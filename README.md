@@ -1,7 +1,7 @@
 # Logiciel de calcul
 Projet estimateur de consommation en eau en fonction des utilisateurs
 
-# Autheurs:
+# Auteurs:
 - ANDRIANAMBININA Liantsoa 				GSI-MP	N°02
 - RAKOTOMALALA Andry Ambinintsoa 		GSI-ER 	N°09
 - RAKOTOMAVO Finaritra Vola				GSI-ER 	N°10
