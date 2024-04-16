@@ -6,6 +6,9 @@ Projet estimateur de consommation en eau en fonction des utilisateurs
 - RAKOTOMALALA Andry Ambinintsoa 		GSI-ER 	N°09
 - RAKOTOMAVO Finaritra Vola				GSI-ER 	N°10
 
+## Utilisation
+Pour utiliser l'outil, il faut télécharger le répertoire "IST" puis lancer "console.py".
+
 ## Les commandes de notre console:
 * print <arg_1>: print arg_1
 * quit: Quitte la console
