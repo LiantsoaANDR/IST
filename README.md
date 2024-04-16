@@ -1,8 +1,13 @@
 # Logiciel de calcul
 Projet estimateur de consommation en eau en fonction des utilisateurs
 
+# Autheurs:
+ANDRIANAMBININA Liantsoa 				GSI-MP	N°02
+RAKOTOMALALA Andry Ambinintsoa 			GSI-ER 	N°09
+RAKOTOMAVO Finaritra Vola				GSI-ER 	N°10
+
 ## Les commandes de notre console:
-* print <abc>: print arg_1
+* print <arg_1>: print arg_1
 * quit: Quitte la console
 * create <arg_1>: Crée un objet de type arg_1
 * show <id>: Montre la représentation de l'objet ayant pour identifiant id
