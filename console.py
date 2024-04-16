@@ -47,18 +47,22 @@ class Shell(cmd.Cmd):
         Print la representation de l'objet basée sur le nom de la classe et son identifiant unique
         """
         arg_list = arg.split()
-        if arg == "":
-            print("** Manque du nom de la classe **")
-        elif arg_list[0] not in self.class_list:
-            print("** Cette classe n'existe pas **")
-        elif len(arg_list) < 2:
-            print("** Manque de l'identifiant unique **")
+        if not arg_list:
+            print("** Manque de l'identifiant **")
+            return
+
+        obj_id = arg_list[0]
+        found_obj = None
+        for obj in storage.all().values():
+            if obj.id == obj_id:
+                found_obj = obj
+                break
+
+        if found_obj is None:
+            print("Objet avec l'ID '{}' n'a pas été trouvé.".format(obj_id))
         else:
-            obj_key = arg_list[0] + "." + arg_list[1]
-            if obj_key in storage.all():
-                print(storage.all()[obj_key])
-                return
-            print("** L'objet n'existe pas **")
+            print(found_obj)
+
 
     def do_destroy(self, arg):
         """
@@ -83,7 +87,7 @@ class Shell(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Prints toues les representations de tous les objects selon ou non leur nom de classe
+        Prints toutes les representations de tous les objects selon ou non leur nom de classe
         """
         if arg == "":
             for obj in storage.all().values():
