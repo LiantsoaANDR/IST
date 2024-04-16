@@ -20,8 +20,16 @@ class Shell(cmd.Cmd):
     def do_print(self, arg):
         print(arg)
 
+    def help_print(self):
+        """Print la documentation de print"""
+        print("print <arg_1> : print arg_1")
+
     def do_quit(self, arg):
         return True
+    
+    def help_quit(self):
+        """Print la documentation de quit"""
+        print("quit : Quitte la console")
 
     def emptyline(self):
         """Ne fait rien"""
@@ -31,16 +39,19 @@ class Shell(cmd.Cmd):
         """
         Crée un objet de son choix
         """
-        """Creates a new instance of BaseModel, saves it (to the JSON file)"""
         arg_list = arg.split()
         if arg == "":
-            print("** class name missing **")
+            print("** Manque du nom de la classe **")
         elif arg not in self.class_list:
-            print("** class doesn't exist **")
+            print("** Cette classe n'existe pas **")
         else:
             obj = eval(arg)()
             obj.save()
             print(obj)
+
+    def help_create(self):
+        """Print la documentation de create"""
+        print("create <arg_1> : Crée un objet de type arg_1")
 
     def do_show(self, arg):
         """
@@ -63,6 +74,9 @@ class Shell(cmd.Cmd):
         else:
             print(found_obj)
 
+    def help_show(self):
+        """Print la documentation de show"""
+        print("show <id_1>: Montre la représentation de l'objet ayant pour identifiant id_1")
 
     def do_destroy(self, arg):
         """
@@ -85,6 +99,10 @@ class Shell(cmd.Cmd):
                 return
             print("** L'objet n'existe pas **")
 
+    def help_destroy(self):
+        """Print la documentation de destroy"""
+        print("destroy <arg_1> <id_1>: Supprime un object selon son nom de classe arg_1 et son identifiant unique id_1")
+
     def do_all(self, arg):
         """
         Prints toutes les representations de tous les objects selon ou non leur nom de classe
@@ -98,6 +116,10 @@ class Shell(cmd.Cmd):
                     print(str(obj))
         else:
             print("** L'objet n'existe pas **")
+
+    def help_all(self):
+        """Print la documentation de all"""
+        print("all <arg_1>: Prints toutes les representations de tous les objects selon ou non leur nom de classe arg_1. Si arg_1 n'est pas donné, print toutes les représentations de tous les objects existants")
 
     def do_update(self, arg):
         """
@@ -132,6 +154,10 @@ class Shell(cmd.Cmd):
             else:
                 print("** L'objet n'existe pas **")
 
+    def help_update(self):
+        """Print la documentation de update"""
+        print("update <arg_1> <id_1> <arg_2> <arg_3>: Met à jour l'attribut arg_2 par la valeur arg_3 de l'objet de type arg_1 d'indentifiant id_1")
+
     def do_estimate(self, arg):
         """
         Fait une estimation de la consommation moyenne des utilisateurs
@@ -148,6 +174,10 @@ class Shell(cmd.Cmd):
             print("La consommation totale de tous les '{}' est : {:.2f} L".format(arg, estim))
         else:
             print("** L'objet n'existe pas **")
+
+    def help_estimate(self):
+        """Print la documentation de estimate"""
+        print("estimate <arg_1>: Print une estimation de la consommation en eau de arg_1 des utilisateurs. Si arg_1 n'est pas donné, print la consommation totales de tous le système")
 
     def do_precise(self, arg):
         """
@@ -173,6 +203,10 @@ class Shell(cmd.Cmd):
                 conso = float(found_obj.cons) * float(found_obj.user)
                 total_conso += conso
         print("La consommation totale des objets précisés est : {:.2f} L".format(total_conso))
+
+    def help_precise(self):
+        """Print la documentation de precise"""
+        print("precise <id_1> <id_2> <id_3> ...: Print une estimation de la consommation en eau des objets ayants pour id : id_1, id_2, ... (effectue une somme la consommation de ces objets)")
 
 
 if __name__ == '__main__':
