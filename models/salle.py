@@ -12,5 +12,5 @@ class Salle(BaseModel):
         super().__init__(**kwargs)
         Salle.count += 1
 
-    name = "SANS NOM"
+    nom = "SANS NOM"
     cons = 0

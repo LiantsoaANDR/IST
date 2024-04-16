@@ -12,5 +12,5 @@ class Appareil(BaseModel):
         super().__init__(**kwargs)
         Appareil.count += 1
 
-    name = "SANS NOM"
+    nom = "SANS NOM"
     cons = 0
