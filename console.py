@@ -5,6 +5,7 @@ from models.salle import Salle
 from models import storage
 
 def is_float(value):
+    """Vérifie si value peut être convertie en float"""
     try:
         float(value)
         return True
@@ -18,6 +19,7 @@ class Shell(cmd.Cmd):
     prompt = '(estimateur) '
     
     def do_print(self, arg):
+        """Print arg"""
         print(arg)
 
     def help_print(self):
@@ -25,6 +27,7 @@ class Shell(cmd.Cmd):
         print("print <arg_1> : print arg_1")
 
     def do_quit(self, arg):
+        """Quitte la console"""
         return True
     
     def help_quit(self):
